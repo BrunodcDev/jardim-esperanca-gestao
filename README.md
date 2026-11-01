@@ -50,6 +50,8 @@ Acesse **http://127.0.0.1:8000** no navegador.
 
 ## Usuário de teste (dados fictícios)
 
+**Instruções de login:** usuário `admin` / senha `Admin123!`.
+
 Se você rodou a carga de dados de exemplo, existe o usuário:
 
 - **Usuário:** `admin`
