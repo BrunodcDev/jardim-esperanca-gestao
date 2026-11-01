@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}Beneficiários{% endblock %}
+
+{% block content %}
+<div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-4">
+  <h1 class="h4 mb-0">Beneficiários</h1>
+  <a href="{% url 'beneficiarios:cadastrar' %}" class="btn btn-primary">
+    <i class="bi bi-plus-lg me-1" aria-hidden="true"></i> Novo beneficiário
+  </a>
+</div>
+
+<form method="get" class="mb-4">
+  <div class="input-group">
+    <label for="q" class="visually-hidden">Buscar por nome</label>
+    <span class="input-group-text bg-white"><i class="bi bi-search" aria-hidden="true"></i></span>
+    <input type="search" name="q" id="q" class="form-control" placeholder="Buscar por nome..." value="{{ query }}">
+    <button type="submit" class="btn btn-primary">Buscar</button>
+  </div>
+</form>
+
+{% if beneficiarios %}
+<div class="row g-3">
+  {% for b in beneficiarios %}
+  <div class="col-12 col-md-6 col-lg-4">
+    <div class="card h-100">
+      <div class="card-body">
+        <div class="d-flex justify-content-between align-items-start gap-2">
+          <h2 class="h6 mb-1">{{ b.nome }}</h2>
+          {% if b.situacao == "ativa" %}
+            <span class="badge text-bg-success">Ativa</span>
+          {% else %}
+            <span class="badge text-bg-secondary">Inativa</span>
+          {% endif %}
+        </div>
+        <p class="text-muted small mb-2">
+          <i class="bi bi-geo-alt me-1" aria-hidden="true"></i>{{ b.bairro }}
+        </p>
+        <p class="small mb-3">
+          <i class="bi bi-people me-1" aria-hidden="true"></i>
+          {{ b.qtd_pessoas }} pessoa{{ b.qtd_pessoas|pluralize:"s" }} na família
+        </p>
+        <a href="{% url 'beneficiarios:editar' b.pk %}" class="btn btn-outline-primary btn-sm">Editar</a>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% else %}
+  <div class="card">
+    <div class="card-body text-center text-muted py-5">
+      <i class="bi bi-people fs-1 d-block mb-2" aria-hidden="true"></i>
+      Nenhum beneficiário encontrado.
+    </div>
+  </div>
+{% endif %}
+{% endblock %}

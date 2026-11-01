@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}Entrar{% endblock %}
+
+{% block main_class %}login-main{% endblock %}
+
+{% block content %}
+<div class="login-card card">
+  <div class="card-body p-4 p-md-5">
+    <div class="login-brand mb-3">
+      <i class="bi bi-flower1" aria-hidden="true"></i>
+    </div>
+    <p class="text-center text-uppercase small fw-bold text-muted mb-1">Acesso restrito à equipe</p>
+    <h1 class="h4 text-center mb-4">Bem-vindo(a) de volta</h1>
+
+    {% if form.errors %}
+      <div class="alert alert-danger" role="alert">E-mail ou senha inválidos.</div>
+    {% endif %}
+
+    <form method="post">
+      {% csrf_token %}
+      {% if redirect_field_value %}
+        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}">
+      {% endif %}
+
+      <div class="mb-3">
+        <label for="id_login" class="form-label">E-mail ou nome de usuário</label>
+        <input type="text" name="login" id="id_login" class="form-control"
+               value="{{ form.login.value|default_if_none:'' }}" autocomplete="username" autofocus required>
+      </div>
+      <div class="mb-3">
+        <label for="id_password" class="form-label">Senha</label>
+        <input type="password" name="password" id="id_password" class="form-control"
+               autocomplete="current-password" required>
+      </div>
+
+      <button type="submit" class="btn btn-primary w-100 mt-2">Entrar</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

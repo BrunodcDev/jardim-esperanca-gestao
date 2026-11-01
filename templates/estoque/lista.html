@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block title %}Estoque{% endblock %}
+
+{% block content %}
+<div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-4">
+  <h1 class="h4 mb-0">Estoque</h1>
+  <div class="d-flex gap-2">
+    <a href="{% url 'estoque:historico' %}" class="btn btn-outline-primary">
+      <i class="bi bi-clock-history me-1" aria-hidden="true"></i> Histórico
+    </a>
+    <a href="{% url 'estoque:saida' %}" class="btn btn-primary">
+      <i class="bi bi-arrow-up-right me-1" aria-hidden="true"></i> Registrar saída
+    </a>
+  </div>
+</div>
+
+{% if itens %}
+<div class="row g-3">
+  {% for item in itens %}
+  <div class="col-12 col-md-6 col-lg-4">
+    <div class="card h-100">
+      <div class="card-body d-flex gap-3 align-items-start">
+        <div class="item-icon"><i class="bi bi-box-seam" aria-hidden="true"></i></div>
+        <div class="flex-grow-1">
+          <h2 class="h6 mb-1">{{ item.nome_item }}</h2>
+          <p class="mb-2">
+            <span class="fs-4 fw-bold">{{ item.saldo }}</span>
+            <span class="text-muted small"> / mínimo {{ item.minimo }}</span>
+          </p>
+          {% if item.abaixo_do_minimo %}
+            <span class="badge-baixo">
+              <i class="bi bi-exclamation-triangle-fill me-1" aria-hidden="true"></i>
+              Abaixo do mínimo
+            </span>
+          {% else %}
+            <span class="badge text-bg-success">
+              <i class="bi bi-check-circle me-1" aria-hidden="true"></i> Saldo adequado
+            </span>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% else %}
+  <div class="card">
+    <div class="card-body text-center text-muted py-5">
+      <i class="bi bi-box-seam fs-1 d-block mb-2" aria-hidden="true"></i>
+      Nenhum item no estoque.
+    </div>
+  </div>
+{% endif %}
+{% endblock %}
